@@ -1,2 +1,41 @@
-# ha-csg-shenzhen
-Experimental Shenzhen adaptation of China Southern Power Grid statistics for Home Assistant. Based on CubicPill / windyboy / DusKing1; GPL-3.0.
+# 南方电网统计：深圳实验修复版
+
+用于 Home Assistant 的社区组件，版本 **1.3.3b1**。本仓库供自用验证；不是南方电网官方服务，也不是上游正式发布。
+
+## 来源与许可证
+
+基于 CubicPill 原项目、windyboy 维护版，以及 DusKing1 的深圳适配分支：
+- 原项目：https://github.com/CubicPill/china_southern_power_grid_stat
+- 维护版：https://github.com/windyboy/china_southern_power_grid_stat
+- 深圳适配 PR：https://github.com/windyboy/china_southern_power_grid_stat/pull/6
+- 固定基础提交：79fc53778a80a3705c2d1ae19a557402613f3081
+- 本地修订日期：2026-10-18
+
+保留上述作者归属，沿用 GNU GPL v3，完整条款见 LICENSE。
+
+## 变更
+
+- 使用深圳电量日历和账单接口。
+- 删除深圳固定阶梯边界、固定电价推算及三个阶梯估算实体。
+- 昨日用电按准确日期匹配，支持跨月和跨年，缺失不以最近日期替代。
+- 缺失或非法用量、金额保持不可用；明确的真实零值保留。
+- 账单仅接受唯一且月份明确匹配的记录，不取列表第一项。
+- 登录流程、官方请求域名和其他地区更新分支保持原样；没有增加运行依赖。
+
+## 当前限制
+
+**尚未在真实南网账号完成验证。** 26 项离线边界测试、9 个 Python 文件语法检查及补丁应用检查已通过；离线测试不代表真实接口或 HA 端到端成功。
+
+账单筛选只接受条目显式 yearMonth（YYYYMM 或 YYYY-MM）。上游没有公开脱敏响应样例，此字段假设尚待验证；其他返回格式保持不可用，不能据列表顺序推断月份。日历仅接受完整日期 YYYY-MM-DD、YYYY/MM/DD 或 YYYYMMDD。
+
+数据是供电局日/月数据，默认每四小时查询，可能延迟。不是实时功率读数；当前月费用可能未出账。上游仍只使用每户第一个计量点，多计量点可能统计不全。会话失效需重新登录。
+
+本版本先用于核对电量、账单和余额。没有历史统计回填，暂勿直接用于 Energy 长期累计统计、扣费或设备控制。不要通过电价乘用量补造账单金额。
+
+## 安装
+
+在 HACS 的自定义仓库中添加本仓库，类别选“集成”，下载默认分支后重启 HA。随后在设备与服务中添加 “China Southern Power Grid Statistics - Shenzhen Experimental”。
+
+与其他 china_southern_power_grid_stat 组件使用同一 domain，不能并行安装。升级或替换前应备份现有配置；从其他仓库更新可能覆盖本修复。
+
+由使用者在本地扫码或短信登录。手机号、登录令牌、绑定户号及相关账户信息会由组件保存在本机 HA，用于查询南网官方服务。公开仓库不需要任何个人账号数据；请勿上传令牌、户号、地址或完整调试日志。
