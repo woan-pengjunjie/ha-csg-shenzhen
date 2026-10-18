@@ -1,0 +1,97 @@
+{
+  "config": {
+    "abort": {
+      "already_configured": "This account is already configured",
+      "reauth_successful": "Authentication was successful",
+      "unique_id_mismatch": "The authenticated account does not match the existing account"
+    },
+    "error": {
+      "cannot_connect": "Unable to connect",
+      "invalid_auth": "Invalid authentication",
+      "qr_not_scanned": "Scan the QR code and confirm the login",
+      "qr_expired": "The QR code expired. Refresh it and try again",
+      "unknown": "An unknown error occurred"
+    },
+    "step": {
+      "user": {
+        "title": "Choose a login method",
+        "description": "Choose how to sign in to your China Southern Power Grid account",
+        "menu_options": {
+          "sms_login": "SMS verification code",
+          "sms_pwd_login": "Password and SMS code",
+          "csg_qr_login": "CSG app QR code",
+          "wx_qr_login": "WeChat QR code",
+          "ali_qr_login": "Alipay QR code"
+        }
+      },
+      "network": {
+        "title": "Network protocol",
+        "description": "Choose the network protocol used to reach the CSG servers",
+        "data": {"ip_family": "Network protocol"}
+      },
+      "sms_login": {
+        "title": "Sign in to CSG",
+        "description": "Sign in with a phone number and SMS verification code",
+        "data": {
+          "username": "Phone number",
+          "username_invalid": "Enter an 11-digit phone number"
+        }
+      },
+      "sms_pwd_login": {
+        "title": "Sign in to CSG",
+        "description": "Sign in with a phone number, password, and SMS verification code",
+        "data": {
+          "username": "Phone number",
+          "username_invalid": "Enter an 11-digit phone number",
+          "password": "Password",
+          "password_invalid": "Enter an 8-16 character password"
+        }
+      },
+      "validate_sms_code": {
+        "title": "Enter the SMS code",
+        "description": "A verification code was sent to {phone_no}",
+        "data": {
+          "sms_code": "SMS code",
+          "sms_code_invalid": "Enter the 6-digit SMS code"
+        }
+      },
+      "qr_login": {
+        "title": "Sign in with a QR code",
+        "description": "{description}",
+        "data": {"refresh_qr_code": "Refresh QR code"}
+      },
+      "reauth_confirm": {
+        "title": "Sign in again",
+        "description": "Your login expired. Sign in again to continue"
+      }
+    }
+  },
+  "options": {
+    "abort": {
+      "no_account": "No electricity accounts are linked to this account",
+      "all_added": "All linked electricity accounts have already been added",
+      "reauth_required": "Your login expired. Reauthentication has started"
+    },
+    "step": {
+      "init": {"title": "Choose an action"},
+      "add_account": {"title": "Choose an electricity account"},
+      "settings": {
+        "title": "Settings",
+        "description": "Automatic IPv4/IPv6 is the default. IPv4 only forces IPv4; IPv6 only forces IPv6 and never falls back. Auto may be delayed when IPv6 resolves but is unreachable.",
+        "data": {
+          "update_interval": "Update interval (seconds)",
+          "ip_family": "Network protocol"
+        }
+      }
+    }
+  },
+  "selector": {
+    "ip_family": {
+      "options": {
+        "auto": "Automatic IPv4/IPv6 (default, recommended)",
+        "ipv4": "IPv4 only",
+        "ipv6": "IPv6 only (advanced)"
+      }
+    }
+  }
+}

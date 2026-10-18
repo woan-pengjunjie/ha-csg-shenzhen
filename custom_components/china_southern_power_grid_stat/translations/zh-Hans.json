@@ -1,0 +1,105 @@
+{
+  "config": {
+    "abort": {
+      "already_configured": "账号已添加，请勿重复添加",
+      "reauth_successful": "登录成功",
+      "unique_id_mismatch": "重新登录的账号与原账号不一致"
+    },
+    "error": {
+      "cannot_connect": "网络异常",
+      "invalid_auth": "登录信息无效",
+      "qr_not_scanned": "扫描二维码并确认登录",
+      "qr_expired": "二维码已过期，请刷新后重试",
+      "unknown": "未知错误"
+    },
+    "step": {
+      "user": {
+        "title": "选择登录方式",
+        "description": "选择用于登录南方电网账号的方式",
+        "menu_options": {
+          "sms_login": "短信验证码登录",
+          "sms_pwd_login": "短信验证码和密码登录",
+          "csg_qr_login": "南网APP扫码登录",
+          "wx_qr_login": "微信扫码登录",
+          "ali_qr_login": "支付宝扫码登录"
+        }
+      },
+      "network": {
+        "title": "网络协议",
+        "description": "选择连接南方电网服务器时使用的网络协议",
+        "data": {
+          "ip_family": "网络协议"
+        }
+      },
+      "sms_login": {
+        "title": "登录南方电网",
+        "description": "使用手机号和短信验证码登录",
+        "data": {
+          "username": "手机号",
+          "username_invalid": "请输入11位手机号"
+        }
+      },
+      "sms_pwd_login": {
+        "title": "登录南方电网",
+        "description": "使用手机号、密码和短信验证码登录",
+        "data": {
+          "username": "手机号",
+          "username_invalid": "请输入11位手机号",
+          "password": "密码",
+          "password_invalid": "请输入8-16位登陆密码"
+        }
+      },
+      "validate_sms_code": {
+        "title": "输入短信验证码",
+        "description": "验证码已发送到: {phone_no}",
+        "data": {
+          "sms_code": "短信验证码",
+          "sms_code_invalid": "请输入6位短信验证码"
+        }
+      },
+      "qr_login": {
+        "title": "扫码登录",
+        "description": "{description}",
+        "data": {
+          "refresh_qr_code": "刷新二维码"
+        }
+      },
+      "reauth_confirm": {
+        "title": "重新登录账号",
+        "description": "登录状态已过期，请重新登录"
+      }
+    }
+  },
+  "options": {
+    "abort": {
+      "no_account": "账户未绑定缴费号",
+      "all_added": "没有可添加到此集成的缴费号",
+      "reauth_required": "登录已过期，已启动重新认证"
+    },
+    "step": {
+      "init": {
+        "title": "选择操作"
+      },
+      "add_account": {
+        "title": "选择缴费号"
+      },
+      "settings": {
+        "title": "参数设置",
+        "description": "默认自动选择 IPv4/IPv6。仅 IPv4 只走 IPv4；仅 IPv6 只走 IPv6、不会回退；自动模式在 IPv6 可解析但不可连接的环境中可能延迟。",
+        "data": {
+          "update_interval": "更新间隔（秒）",
+          "ip_family": "网络协议"
+        }
+      }
+    }
+  },
+  "selector": {
+    "ip_family": {
+      "options": {
+        "auto": "自动选择 IPv4/IPv6（默认、推荐）",
+        "ipv4": "仅 IPv4",
+        "ipv6": "仅 IPv6（高级）"
+      }
+    }
+  }
+}
