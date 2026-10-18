@@ -1,0 +1,20 @@
+{
+  "domain": "china_southern_power_grid_stat",
+  "name": "China Southern Power Grid Statistics - Shenzhen Experimental",
+  "codeowners": [
+    "@woan-pengjunjie"
+  ],
+  "config_flow": true,
+  "dependencies": [],
+  "documentation": "https://github.com/woan-pengjunjie/ha-csg-shenzhen",
+  "homekit": {},
+  "iot_class": "cloud_polling",
+  "issue_tracker": "https://github.com/woan-pengjunjie/ha-csg-shenzhen/issues",
+  "requirements": [
+    "pycryptodome",
+    "brotli"
+  ],
+  "ssdp": [],
+  "version": "1.3.3b1",
+  "zeroconf": []
+}
