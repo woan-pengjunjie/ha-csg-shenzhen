@@ -78,7 +78,7 @@ from .csg_client import (
     CSGTransportError,
     NotLoggedIn,
 )
-from .shenzhen import optional_float
+from .shenzhen import optional_float, select_annual_month
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -304,7 +304,7 @@ class CSGCostSensor(CSGBaseSensor):
         )
         self._attr_state_class = None
         if entity_suffix in (SUFFIX_THIS_MONTH_COST, SUFFIX_THIS_YEAR_COST):
-            self._attr_state_class = SensorStateClass.TOTAL_INCREASING
+            self._attr_state_class = SensorStateClass.TOTAL
         elif entity_suffix == SUFFIX_CURRENT_LADDER_TARIFF:
             self._attr_device_class = None
             self._attr_native_unit_of_measurement = "CNY/kWh"
@@ -831,11 +831,27 @@ class CSGCoordinator(DataUpdateCoordinator):
             return
 
         if account.area_code == SZ_AREA_CODE:
-            # Shenzhen: use the monthly bill list (exact totals) plus the
-            # electricity calendar for per-day data.
-            success_bill, result_bill = await self._async_fetch(
-                self._client.get_month_bill_list, account, self._last_month_ym
+            # Annual updates have completed before this method is awaited.
+            # Use only this account's explicit year-month record; January
+            # must read last year's monthly details rather than this year's.
+            requested_year = self._last_month_ym[0]
+            current_year = self._this_month_ym[0]
+            source_key = (
+                ATTR_KEY_THIS_YEAR_BY_MONTH if requested_year == current_year
+                else ATTR_KEY_LAST_YEAR_BY_MONTH if requested_year == current_year - 1
+                else None
             )
+            annual_data = self._gathered_data[account.account_number].get(source_key)
+            annual_rows = annual_data.get(source_key) if isinstance(annual_data, dict) else None
+            result_bill = select_annual_month(annual_rows, self._last_month_ym)
+            success_bill = result_bill is not None
+            if not success_bill:
+                # Preserve the existing strict bill API as a fallback; this
+                # does not guess field aliases or select a bill by position.
+                success_bill, result_bill = await self._async_fetch(
+                    self._client.get_month_bill_list, account, self._last_month_ym
+                )
+            # Keep daily data independently of the monthly totals source.
             success_cal, result_cal = await self._async_fetch(
                 self._client.get_month_daily_usage_detail_sz,
                 account,

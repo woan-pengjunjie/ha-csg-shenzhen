@@ -119,3 +119,22 @@ def select_month_bill(
     selected["totalPower"] = optional_float(selected.get("totalPower"))
     selected["totalElectricity"] = optional_float(selected.get("totalElectricity"))
     return selected
+
+
+def select_annual_month(
+    by_month: Any, year_month: tuple[int, int]
+) -> dict | None:
+    """Use one explicit annual-detail month; never fill absent totals with zero."""
+    if not isinstance(by_month, list):
+        return None
+    matches = [
+        row
+        for row in by_month
+        if isinstance(row, dict) and _bill_month(row.get("month")) == year_month
+    ]
+    if len(matches) != 1:
+        return None
+    return {
+        "totalPower": optional_float(matches[0].get("kwh")),
+        "totalElectricity": optional_float(matches[0].get("charge")),
+    }
